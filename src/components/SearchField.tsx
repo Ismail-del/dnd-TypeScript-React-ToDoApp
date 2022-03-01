@@ -6,7 +6,12 @@ type Inputs = {
 };
 
 const SearchField = (props: any) => {
-  const { register, handleSubmit, setValue } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<Inputs>();
   // const [textField, setTextField] = useState('');
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -21,9 +26,10 @@ const SearchField = (props: any) => {
         <div className="flex items-center justify-center shadow-md rounded-full bg-white">
           <input
             type="text"
-            {...register("textInput")}
+            {...register("textInput", { required: true })}
             className="rounded-full w-96 h-9 shadow-sm focus:outline-none flex-grow p-4"
           />
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             onClick={handleSubmit(onSubmit)}
@@ -40,6 +46,11 @@ const SearchField = (props: any) => {
             />
           </svg>
         </div>
+        {errors.textInput && (
+          <span className="text-red-600 font-bold text-lg">
+            Please enter a value
+          </span>
+        )}
       </section>
     </Fragment>
   );
