@@ -35,18 +35,14 @@ function App() {
   };
   const onDragEndHandler = (result: any) => {
     if (!result.destination) {
-      console.log(result);
       return;
     }
-    console.log("result = ", result.source.droppableId);
     let newState = {
       available: textField,
       assigned: textField2,
     };
 
     const listCopy: any = { ...newState };
-
-    console.log("newState", newState);
 
     const sourceList = listCopy[result.source.droppableId];
     const [removedElement, newSourceList] = removeFromList(
