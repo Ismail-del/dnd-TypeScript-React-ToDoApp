@@ -1,25 +1,19 @@
-// import { useForm } from "react-hook-form";
-
+import List from "../List/List";
 import { DraggableProvided, Draggable } from "react-beautiful-dnd";
 
-import List from "./List/List";
 interface TodoListProps {
-  textFieldProp: {
+  textField2: {
     id: string;
     text: string;
     modifText: boolean;
     lineThrough: boolean;
   }[];
-  setTextField: React.Dispatch<React.SetStateAction<any>>;
-  //   onDeleteList: (id: string) => void;
-  //   onModifyList: (id: string) => void;
-  //   onModifyTextField: (id: string, text: string) => void;
-  //   onLineThrough: (id: string) => void;
+  setTextField2: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const CardList = (props: TodoListProps) => {
+const CardList2 = (props: TodoListProps) => {
   const onClickInputHandler = (id: string) => {
-    const newList = props.textFieldProp.map((item) => {
+    const newList = props.textField2.map((item) => {
       if (item.id === id) {
         const updatedItem = {
           ...item,
@@ -29,11 +23,11 @@ const CardList = (props: TodoListProps) => {
       }
       return item;
     });
-    props.setTextField(newList);
+    props.setTextField2(newList);
   };
 
   const onBlurModifyHandler = (id: string) => {
-    const newList = props.textFieldProp.map((item) => {
+    const newList = props.textField2.map((item) => {
       if (item.id === id) {
         const updatedItem = {
           ...item,
@@ -44,11 +38,11 @@ const CardList = (props: TodoListProps) => {
       }
       return item;
     });
-    props.setTextField(newList);
+    props.setTextField2(newList);
   };
 
   const onModifyTextFieldHandler = (id: string, text: string) => {
-    const newList = props.textFieldProp.map((item) => {
+    const newList = props.textField2.map((item) => {
       if (item.id === id) {
         const updatedItem = {
           ...item,
@@ -59,11 +53,11 @@ const CardList = (props: TodoListProps) => {
       }
       return item;
     });
-    props.setTextField(newList);
+    props.setTextField2(newList);
   };
 
   const onLineThroughHandler = (id: string) => {
-    const newList = props.textFieldProp.map((item) => {
+    const newList = props.textField2.map((item) => {
       if (item.id === id) {
         const updatedItem = {
           ...item,
@@ -74,24 +68,23 @@ const CardList = (props: TodoListProps) => {
       }
       return item;
     });
-    props.setTextField(newList);
+    props.setTextField2(newList);
   };
 
-  //   const onChangeInputHandler = (event: any) => {
-  //     console.log(event.target.value);
-  //     setTextInput(event.target.value);
-  //   };
   const onDeleteListHandler = (id: string) => {
-    const newData = props.textFieldProp.filter((item) => item.id !== id);
-    props.setTextField(newData);
+    const newData = props.textField2.filter((item) => item.id !== id);
+    props.setTextField2(newData);
   };
-
   return (
     <section>
-      <List name="available">
-        {props.textFieldProp.map((item, index) => {
+      <List name="assigned">
+        {props.textField2.map((item, index) => {
           return (
-            <Draggable key={item?.id} draggableId={item?.id + ""} index={index}>
+            <Draggable
+              key={item?.id}
+              draggableId={item?.id + "12"}
+              index={index}
+            >
               {(provided: DraggableProvided | any) => (
                 <div>
                   <div
@@ -101,7 +94,7 @@ const CardList = (props: TodoListProps) => {
                   >
                     <div
                       key={item?.id}
-                      className="bg-red-300 h-20 m-5 rounded-full flex p-2 items-center shadow-xl max-w-xl mx-auto hover:scale-105 transform duration-500 ease-out cursor-pointer"
+                      className="bg-[#aab7ff] h-20 m-5 rounded-full flex p-2 items-center shadow-xl max-w-xl mx-auto hover:scale-105 transform duration-500 ease-out cursor-pointer"
                     >
                       {!item?.modifText && (
                         <h1
@@ -178,23 +171,8 @@ const CardList = (props: TodoListProps) => {
           );
         })}
       </List>
-      {/* <List title="To" onDragEnd={onDragEnd} name="assigned">
-        {items.assigned.map((item, index) => (
-          <Draggable draggableId={item?.id + "12"} index={index} key={item?.id}>
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <Card data={item} />
-              </div>
-            )}
-          </Draggable>
-        ))}
-      </List> */}
     </section>
   );
 };
 
-export default CardList;
+export default CardList2;

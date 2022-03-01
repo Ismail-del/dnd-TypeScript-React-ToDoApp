@@ -1,10 +1,10 @@
-import SearchField from "./components/SearchField";
+import SearchField from "./components/SearchField/SearchField";
 import "./App.css";
-import CardList from "./components/CardList";
+import CardList from "./components/CardLists/CardList";
 import { useState } from "react";
 import { Todo } from "./model/dataList";
 import { DragDropContext } from "react-beautiful-dnd";
-import CardList2 from "./components/CardList2";
+import CardList2 from "./components/CardLists/CardList2";
 import CardActiveTasks from "./components/CardActiveTasks/CardActiveTasks";
 import CardCompletedTasks from "./components/CardCompletedTasks/CardCompletedTasks";
 import CardMain from "./components/CardMain/CardMain";

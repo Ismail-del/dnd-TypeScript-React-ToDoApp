@@ -1,31 +1,86 @@
-import List from "./List/List";
 import { DraggableProvided, Draggable } from "react-beautiful-dnd";
 
+import List from "../List/List";
 interface TodoListProps {
-  textField2: {
+  textFieldProp: {
     id: string;
     text: string;
     modifText: boolean;
     lineThrough: boolean;
   }[];
-  setTextField2: React.Dispatch<React.SetStateAction<any>>;
-  //   onDeleteList: (id: string) => void;
-  //   onModifyList: (id: string) => void;
-  //   onModifyTextField: (id: string, text: string) => void;
-  //   onLineThrough: (id: string) => void;
+  setTextField: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const CardList2 = (props: TodoListProps) => {
+const CardList = (props: TodoListProps) => {
+  const onClickInputHandler = (id: string) => {
+    const newList = props.textFieldProp.map((item) => {
+      if (item.id === id) {
+        const updatedItem = {
+          ...item,
+          modifText: !item.modifText,
+        };
+        return updatedItem;
+      }
+      return item;
+    });
+    props.setTextField(newList);
+  };
+
+  const onBlurModifyHandler = (id: string) => {
+    const newList = props.textFieldProp.map((item) => {
+      if (item.id === id) {
+        const updatedItem = {
+          ...item,
+          modifText: !item.modifText,
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+    props.setTextField(newList);
+  };
+
+  const onModifyTextFieldHandler = (id: string, text: string) => {
+    const newList = props.textFieldProp.map((item) => {
+      if (item.id === id) {
+        const updatedItem = {
+          ...item,
+          text: text,
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+    props.setTextField(newList);
+  };
+
+  const onLineThroughHandler = (id: string) => {
+    const newList = props.textFieldProp.map((item) => {
+      if (item.id === id) {
+        const updatedItem = {
+          ...item,
+          lineThrough: !item.lineThrough,
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+    props.setTextField(newList);
+  };
+  const onDeleteListHandler = (id: string) => {
+    const newData = props.textFieldProp.filter((item) => item.id !== id);
+    props.setTextField(newData);
+  };
+
   return (
     <section>
-      <List name="assigned">
-        {props.textField2.map((item, index) => {
+      <List name="available">
+        {props.textFieldProp.map((item, index) => {
           return (
-            <Draggable
-              key={item?.id}
-              draggableId={item?.id + "12"}
-              index={index}
-            >
+            <Draggable key={item?.id} draggableId={item?.id + ""} index={index}>
               {(provided: DraggableProvided | any) => (
                 <div>
                   <div
@@ -35,7 +90,7 @@ const CardList2 = (props: TodoListProps) => {
                   >
                     <div
                       key={item?.id}
-                      className="bg-red-300 h-20 m-5 rounded-full flex p-2 items-center shadow-xl max-w-xl mx-auto hover:scale-105 transform duration-500 ease-out cursor-pointer"
+                      className="bg-[#e7efff] h-20 m-5 rounded-full flex p-2 items-center shadow-xl max-w-xl mx-auto hover:scale-105 transform duration-500 ease-out cursor-pointer"
                     >
                       {!item?.modifText && (
                         <h1
@@ -50,17 +105,17 @@ const CardList2 = (props: TodoListProps) => {
                         <input
                           value={item?.text}
                           type="text"
-                          // onChange={(e) =>
-                          //   onModifyTextFieldHandler(item?.id, e.target.value)
-                          // }
+                          onChange={(e) =>
+                            onModifyTextFieldHandler(item?.id, e.target.value)
+                          }
                           className="h-10 rounded-full flex-grow p-3 focus:outline-none shadow-lg"
-                          // onBlur={() => onBlurModifyHandler(item?.id)}
+                          onBlur={() => onBlurModifyHandler(item?.id)}
                         />
                       )}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6 cursor-pointer m-1"
-                        //   onClick={() => onLineThroughHandler(item?.id)}
+                        onClick={() => onLineThroughHandler(item?.id)}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -75,7 +130,7 @@ const CardList2 = (props: TodoListProps) => {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6 cursor-pointer m-1"
-                        //   onClick={() => onDeleteListHandler(item?.id)}
+                        onClick={() => onDeleteListHandler(item?.id)}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -92,7 +147,7 @@ const CardList2 = (props: TodoListProps) => {
                         className="h-6 w-6 cursor-pointer m-1"
                         fill="none"
                         onClick={() => {
-                          // onClickInputHandler(item?.id);
+                          onClickInputHandler(item?.id);
                         }}
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -112,8 +167,23 @@ const CardList2 = (props: TodoListProps) => {
           );
         })}
       </List>
+      {/* <List title="To" onDragEnd={onDragEnd} name="assigned">
+        {items.assigned.map((item, index) => (
+          <Draggable draggableId={item?.id + "12"} index={index} key={item?.id}>
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Card data={item} />
+              </div>
+            )}
+          </Draggable>
+        ))}
+      </List> */}
     </section>
   );
 };
 
-export default CardList2;
+export default CardList;
